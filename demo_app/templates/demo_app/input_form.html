@@ -1,11 +1,11 @@
 {% extends 'demo_app/base.html' %}
 
 {% block content %}
-    <h1>情報入力画面</h1>
+    <h1 class="grey-text text-darken2">情報入力画面</h1>
       <form method="POST" class="register-form" action="input_form">{% csrf_token %}
 
 <!-- 名前セクション -->
-        <div class="row" style="margin-bottom:40px">
+        <div class="row teal-text text-darken2" style="margin-bottom:40px">
           <div class="range col s6">
             名字
             {{ form.last_name }}
@@ -17,7 +17,7 @@
         </div>
 
 <!-- 残高 -->
-        <div class="row" style="margin-bottom:40px">
+        <div class="row teal-text text-darken2" style="margin-bottom:40px">
           <div class="range col s6">
             残高
             {{ form.limit_balance }}
@@ -26,8 +26,8 @@
         </div>
 
 <!-- 性別、学歴、結婚歴、年齢セクション -->
-      <p>デモグラフィック</p>
-        <div class="row" style="margin-bottom:40px">
+      <p class="deep-orange-text text-lighten2" >デモグラフィック</p>
+        <div class="row section deep-orange-text text-lighten2" style="margin-bottom:40px">
           <div class="range col s3">
             性別
             {{ form.sex }}
@@ -47,8 +47,8 @@
         </div>
 
 <!-- 過去の支払い歴 -->
-      <p>過去の支払い歴</p>
-        <div class="row" style="margin-bottom:40px">
+      <p class="light-blue-text">過去の支払い歴</p>
+        <div class="row light-blue-text" style="margin-bottom:40px">
 
           <div class="range col s2">
             1
@@ -77,8 +77,8 @@
         </div>
 
 <!-- 請求書 -->
-        <div class="row" style="margin-bottom:40px">
-          <div class="range col s6">
+        <div class="row light-blue-text" style="margin-bottom:40px">
+          <div class="range col s6 light-blue-text">
             請求書の金額
             {{ form.bill_amt_1 }}
             <span>0</span>
@@ -86,38 +86,38 @@
         </div>
 
 <!-- 支払い書の額 -->
-      <p>支払い書の額</p>
+      <p class="light-blue-text">支払い書の額</p>
         <div class="row" style="margin-bottom:40px">
-          <div class="range col s6">
+          <div class="range col s6 light-blue-text">
             1
             {{ form.pay_amt_1 }}
             <span>5000</span>
           </div>
-          <div class="range col s6">
+          <div class="range col s6 light-blue-text">
             2
             {{ form.pay_amt_2 }}
             <span>5000</span>
           </div>
         </div>
         <div class="row" style="margin-bottom:40px">
-          <div class="range col s6">
+          <div class="range col s6 light-blue-text">
             3
             {{ form.pay_amt_3 }}
             <span>5000</span>
           </div>
-          <div class="range col s6">
+          <div class="range col s6 light-blue-text">
             4
             {{ form.pay_amt_4 }}
             <span>5000</span>
           </div>
         </div>
         <div class="row" style="margin-bottom:40px">
-          <div class="range col s6">
+          <div class="range col s6 light-blue-text">
             5
             {{ form.pay_amt_5 }}
             <span>5000</span>
           </div>
-          <div class="range col s6">
+          <div class="range col s6 light-blue-text">
             6
             {{ form.pay_amt_6 }}
             <span>5000</span>
