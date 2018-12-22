@@ -57,4 +57,4 @@ def result(request):
     return render(request, 'demo_app/result.html', {'y':y[0], 'y_proba':round(y_proba[0][y[0]], 2)*100, 'comment':comment})
 
 def history(request):
-    return render(request, 'demo_app/history.html')
+    return render(request, 'demo_app/history.html', {})
