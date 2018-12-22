@@ -57,8 +57,18 @@ def result(request):
     return render(request, 'demo_app/result.html', {'y':y[0], 'y_proba':round(y_proba[0][y[0]], 2)*100, 'comment':comment})
 
 def history(request):
+    if request.method == 'POST':
+        # 顧客データの削除
+        d_id = request.POST #{{d_id}}で送られてきた値
+        #print(d_id)
+        d_customer = Customers.objects.filter(id=d_id['d_id'])
+        #print(d_customer)
+        d_customer.delete()
+
+        # 再表示
+        customers = Customers.objects.all()
+        return render(request, 'demo_app/history.html', {'customers':customers})
+
     # 顧客一覧の取得
     customers = Customers.objects.all()
-
-
     return render(request, 'demo_app/history.html', {'customers':customers})

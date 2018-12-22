@@ -14,11 +14,11 @@
           <td>{{customer.id}}</td>
           <td>{{customer.registered_date}}</td>
           <td>{{customer.last_name}}{{customer.first_name}}</td>
-          <td>{% if customer.sex == 1%}男性{% else %}女性{% endif %}</td>
+          <td>{% if customer.sex == 1 %}男性{% else %}女性{% endif %}</td>
           <td>{{customer.age}}</td>
           <td>{{customer.education}}</td>
           <td>{{customer.limit_balance}}</td>
-          <td>{% if customer.result == 0 %}Fail{% elif %}Clear{%  else %}None{% endif %}</td>
+          <td>{% if customer.result == 0 %}Fail{% elif customer.result == 1 %}Clear{% else %}None{% endif %}</td>
           <td>{{customer.proba|floatformat:2}}</td>
           <td>{{customer.comment}}</td>
           <td><form class="delete" method="post">{% csrf_token %}
