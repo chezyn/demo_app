@@ -78,3 +78,7 @@ def history(request):
     # 顧客一覧の取得
     customers = Customers.objects.all()
     return render(request, 'demo_app/history.html', {'customers':customers})
+
+#サインアップ用ページ->ログイン要求はしない
+def signup(request):
+    return render(request, 'demo_app/signup.html', {})
