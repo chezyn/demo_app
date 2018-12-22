@@ -1,0 +1,23 @@
+{% extends 'demo_app/base.html' %}
+
+{% block content %}
+
+<h1>計算機(加算専用)です</h1>
+    <form method="post">{% csrf_token %}　<!--methodでactionを指定 後半はDjangoのおまじない-->
+     <div class="row">
+       <div class="input-field col s6">
+         <input placeholder="number" id="number" type="number" name="num1" class="validate">　<!--"name"で値を渡す -->
+         <label for="number">Input Number1</label>
+       </div>
+       <div class="input-field col s6">
+         <input placeholder="number" id="number2" type="number" name="num2" class="validate">
+         <label for="number2">Input Number2</label>
+       </div>
+     </div>
+
+     <button type="submit" name="button">計算の実行</button>　<!--submitを入れておく-->
+    </form>
+
+        {{answer}}
+
+{% endblock %}
