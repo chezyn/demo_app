@@ -98,3 +98,11 @@ def signup(request):
     else:
         form = SignUpForm()
         return render(request, 'demo_app/signup.html', {'form':form})
+
+#@login_required
+def info(request):
+    # DBからデータを取得
+    males = Customers.objects.filter(sex=1).count()
+    females = Customers.objects.filter(sex=2).count()
+
+    return render(request, 'demo_app/info.html', {"num_men":males, "num_women":females})
