@@ -5,7 +5,9 @@ from sklearn.externals import joblib #モデルの保存と読み込み(ない�
 import numpy as np
 
 # global変数として読んでおく(アプリ起動時にだけ読み込まれるようにする，関数呼び出し毎に読み込まない)
-loaded_model = joblib.load('demo_app/demo_model.pkl')
+#loaded_model = joblib.load('demo_app/demo_model.pkl')
+loaded_model = joblib.load('
+/home/chezyn/chezyn.pythonanywhere.com/demo_app/demo_model.pkl')
 
 def index(request):
     return render(request, 'demo_app/index.html', {})
