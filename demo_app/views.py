@@ -5,10 +5,12 @@ from sklearn.externals import joblib #モデルの保存と読み込み(ない�
 import numpy as np
 from django.contrib.auth.decorators import login_required #ログイン認証
 from django.contrib.auth import login, authenticate
+import pandas as pd
+import json
 
 # global変数として読んでおく(アプリ起動時にだけ読み込まれるようにする，関数呼び出し毎に読み込まない)
-loaded_model = joblib.load('demo_app/demo_model.pkl')
-#loaded_model = joblib.load('/home/chezyn/chezyn.pythonanywhere.com/demo_app/demo_model.pkl')
+#loaded_model = joblib.load('demo_app/demo_model.pkl')
+loaded_model = joblib.load('/home/chezyn/chezyn.pythonanywhere.com/demo_app/demo_model.pkl')
 
 @login_required
 def index(request):
@@ -99,10 +101,35 @@ def signup(request):
         form = SignUpForm()
         return render(request, 'demo_app/signup.html', {'form':form})
 
-#@login_required
+@login_required
 def info(request):
-    # DBからデータを取得
-    males = Customers.objects.filter(sex=1).count()
-    females = Customers.objects.filter(sex=2).count()
+    # DBからデータの読み込み
+    customers = Customers.objects.values_list(\
+    'sex', 'education', 'marriage', 'age', 'result', 'proba')
 
-    return render(request, 'demo_app/info.html', {"num_men":males, "num_women":females})
+    # データをDataFarame型に変換
+    lis, cols = [], ['sex', 'education', 'marriage', 'age', 'result', 'proba']
+    for customer in customers:
+        lis.append(customer)
+    df = pd.DataFrame(lis, columns=cols)
+
+    # データの整形
+    df['sex'].replace({1:"男性", 2:"女性"}, inplace=True)
+    df['education'].replace({1:'graduate_school', 2:'university', 3:'high school', 4:'other'}, inplace=True)
+    df['marriage'].replace({1:'married', 2:'single', 3:'others'}, inplace=True)
+    df['result'].replace({0:'審査落ち', 1:'審査通過', 2:'その他'}, inplace=True)
+    df['age'] = pd.cut(df['age'], [0,10,20,30,40,50,60,100], labels=['10代', '20代','30代','40代','50代','60代','70代以上'])
+    df['proba'] = pd.cut(df['proba'], [0,75,100], labels=['要審査', '信頼度高'])
+
+    # データのユニークな値とその数の取得
+    dic_val, dic_index = {}, {}
+    for col in cols:
+        _val = df[col].value_counts().tolist()
+        _index = df[col].value_counts().index.tolist()
+        dic_val[col] = _val
+        dic_index[col] = _index
+
+    # データをJson形式に変換
+    val, index = json.dumps(dic_val), json.dumps(dic_index)
+
+    return render(request, 'demo_app/info.html', {'val':val, 'index':index})
