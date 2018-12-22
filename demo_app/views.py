@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from .forms import InputForm
+from .forms import InputForm, SignUpForm
 from .models import Customers
 from sklearn.externals import joblib #モデルの保存と読み込み(ない場合はmyenvでpip installする)
 import numpy as np
 from django.contrib.auth.decorators import login_required #ログイン認証
+from django.contrib.auth import login, authenticate
 
 # global変数として読んでおく(アプリ起動時にだけ読み込まれるようにする，関数呼び出し毎に読み込まない)
 loaded_model = joblib.load('demo_app/demo_model.pkl')
@@ -81,4 +82,19 @@ def history(request):
 
 #サインアップ用ページ->ログイン要求はしない
 def signup(request):
-    return render(request, 'demo_app/signup.html', {})
+    if request.method == 'POST':
+        form = SignUpForm(request.POST) #入力した値を引き継ぐ
+        if form.is_valid():
+            form.save() #モデルと紐づいているので保存できる
+
+            #ログインさせる
+            username = form.cleaned_data.get('username') #cleaned_data:入ってきたデータを取り出す
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user) #ログイン
+            return redirect('/') #トップに飛ばす
+        else:
+            return redirect('/')
+    else:
+        form = SignUpForm()
+        return render(request, 'demo_app/signup.html', {'form':form})
