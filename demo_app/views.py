@@ -57,4 +57,8 @@ def result(request):
     return render(request, 'demo_app/result.html', {'y':y[0], 'y_proba':round(y_proba[0][y[0]], 2)*100, 'comment':comment})
 
 def history(request):
-    return render(request, 'demo_app/history.html', {})
+    # 顧客一覧の取得
+    customers = Customers.objects.all()
+
+
+    return render(request, 'demo_app/history.html', {'customers':customers})
