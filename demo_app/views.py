@@ -3,11 +3,13 @@ from .forms import InputForm
 from .models import Customers
 from sklearn.externals import joblib #モデルの保存と読み込み(ない場合はmyenvでpip installする)
 import numpy as np
+from django.contrib.auth.decorators import login_required #ログイン認証
 
 # global変数として読んでおく(アプリ起動時にだけ読み込まれるようにする，関数呼び出し毎に読み込まない)
-#loaded_model = joblib.load('demo_app/demo_model.pkl')
-loaded_model = joblib.load('/home/chezyn/chezyn.pythonanywhere.com/demo_app/demo_model.pkl')
+loaded_model = joblib.load('demo_app/demo_model.pkl')
+#loaded_model = joblib.load('/home/chezyn/chezyn.pythonanywhere.com/demo_app/demo_model.pkl')
 
+@login_required
 def index(request):
     return render(request, 'demo_app/index.html', {})
 
