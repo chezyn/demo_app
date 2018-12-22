@@ -7,11 +7,19 @@
     <meta charset="utf-8">
     <title>{% block title %}Demo App_ローン審査{% endblock %}</title>
   </head>
-
   <body>
     <div class="col s12 card-panel teal lighten-2 ">
       <div class="row">
         <span class="white-text col s6" style="font-size:20px"><a href="/" style="color:white">ローン審査アプリ</a></span>
+
+<!-- ログアウト機能の追加 -->
+      {% if user.is_authenticated %}
+        <span class="col s6" style="font-size:20px; text-align: right;">
+          <a href="{% url 'logout' %}" style="color:white; text-decoration: underline;">
+          こんにちは、{{ user.username}}
+          </a>
+        </span>
+      {% endif %}
       </div>
     </div>
 
